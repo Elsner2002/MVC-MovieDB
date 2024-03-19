@@ -105,9 +105,6 @@ class MainController {
         }
     }
     
-    //MARK: Prepare Function
-    // func setDestination() {}
-    
     func chooseSection(_ indexPath: IndexPath) -> Movie {
         let currentSection = self.sections[indexPath.section]
         

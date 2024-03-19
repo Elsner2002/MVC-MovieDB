@@ -25,7 +25,6 @@ class ViewController: UIViewController {
         self.tableView.dataSource = self
     }
     
-    //MARK: Revisar depois
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.shared.segueID,
            let movie = sender as? Movie {
@@ -36,7 +35,6 @@ class ViewController: UIViewController {
     }
 }
 
-//MARK: Revisar depois
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

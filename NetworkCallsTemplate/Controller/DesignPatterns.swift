@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Constants: ObservableObject {
     
@@ -25,3 +26,5 @@ class Constants: ObservableObject {
     ]
     
 }
+
+protocol Coordinator {}
