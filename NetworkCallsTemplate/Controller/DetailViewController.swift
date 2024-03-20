@@ -9,11 +9,13 @@ class DetailController {
         self.movie = movie
     }
     
+    //MARK: Fetch Images form API
     func fetchImage(_ cell: DetailsMovieCell, _ tableView: UITableView, indexPath: IndexPath) {
         if let dataC = movie.imageCover, let imageC = UIImage(data: dataC) {
             cell.posterView.image = imageC
         }
         else{
+            //reload ows with images that wasn't in the code
             MovieDBService.fetchImage(posterPath: movie.posterPath) { [weak self] data in
                 self?.movie.imageCover = data
                 
@@ -24,6 +26,7 @@ class DetailController {
         }
     }
     
+    //MARK: Set cell informations
     func movieInformations(_ cell: DetailsMovieCell) {
         cell.titleLabel.text = movie.getTitle()
         cell.tagsLabel.text = movie.getGenerID()

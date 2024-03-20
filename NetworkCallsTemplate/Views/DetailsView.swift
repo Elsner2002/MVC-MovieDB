@@ -1,6 +1,7 @@
 import UIKit
 
 class DetailsViewController: UIViewController {
+    weak var coordinator: MainCoordinator?
     
     @IBOutlet weak var tableView: UITableView!
     

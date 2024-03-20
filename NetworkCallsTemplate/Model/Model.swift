@@ -23,7 +23,7 @@ struct Movie: Decodable {
         return "\(self.id)" + " - " + self.title
     }
     
-    func getGenerID() -> String{
+    func getGenerID() -> String {
         var g = ""
         for genreID in genreIDs {
             g = "\(genreID), " + g

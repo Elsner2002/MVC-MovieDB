@@ -13,7 +13,9 @@ class MainController {
     private var nowPlaying: [Movie] = []
     private var popular: [Movie] = []
     
+    //MARK: Call teh API to get data
     func apiCall(_ tableView: UITableView) {
+        //get the popular movies in API
         guard let urlP = URL(string: Constants.shared.urlPopular) else { return }
         URLSession.shared.dataTask(with: urlP) { [weak self] data, response, error in
             
@@ -32,6 +34,7 @@ class MainController {
         }
         .resume()
         
+        //get the now playing movies in API
         guard let urlNP = URL(string: Constants.shared.urlNowPlaying) else { return }
         URLSession.shared.dataTask(with: urlNP) { [weak self] data, response, error in
             
@@ -51,6 +54,7 @@ class MainController {
         .resume()
     }
     
+    //MARK: Auxiliar functions to call API
     private func decodeByProtocols(data: Data, type: Section) {
         do {
             let decodedResponse = try JSONDecoder().decode(MovieResponse.self, from: data)
@@ -64,7 +68,6 @@ class MainController {
             print(error)
         }
     }
-    
     private func decodeByManualKeys(data: Data, type: Section) {
         do {
             
@@ -74,7 +77,8 @@ class MainController {
                 print("Error while parsing JSON")
                 return
             }
-
+            
+            //get the API data info from it's id
             for movies in json {
                 guard let id = movies["id"] as? Int,
                       let title = movies["original_title"] as? String,
@@ -85,7 +89,8 @@ class MainController {
                 else {
                     continue
                 }
-
+                
+                //save in the respective array
                 let movie = Movie(id: id, title: title, overview: overview, voteAverage: voteAverage, posterPath: posterPath, genreIDs: genreIDs)
                 switch(type){
                 case .nowPlaying:
@@ -105,6 +110,7 @@ class MainController {
         }
     }
     
+    //MARK: auxiliar functions to get info for view
     func chooseSection(_ indexPath: IndexPath) -> Movie {
         let currentSection = self.sections[indexPath.section]
         
@@ -115,7 +121,6 @@ class MainController {
             return popular[indexPath.row]
         }
     }
-    
     func sectionCount(_ section: Int) -> Int {
         let currentSection = self.sections[section]
         
@@ -126,11 +131,9 @@ class MainController {
             return self.popular.count
         }
     }
-    
     func getSections() -> [Section] {
         return sections
     }
-    
     func setContent(_ header: UITableViewHeaderFooterView, section: Int) -> UIListContentConfiguration{
         var content = header.defaultContentConfiguration()
         
@@ -141,6 +144,7 @@ class MainController {
         return content
     }
     
+    //MARK: Edit the cell for each type of movie
     func movieInRow(cell: SmallMovieCell, _ indexPath: IndexPath, _ tableView: UITableView) {
         
         let currentSection = self.sections[indexPath.section]
@@ -155,7 +159,7 @@ class MainController {
     }
     
     private func editCell(cell: SmallMovieCell, _ indexPath: IndexPath, _ tableView: UITableView, movieArray: [Movie], sec: Section) {
-        
+        //get the correct movie to use the info
         let movie = movieArray[indexPath.row]
     
         if let dataC = movie.imageCover, let imageC = UIImage(data: dataC) {
@@ -176,6 +180,8 @@ class MainController {
                 }
             }
         }
+        
+        //set the cell information
         cell.titleLabel.text = movieArray[indexPath.row].title
         cell.descriptionLabel.text = movieArray[indexPath.row].overview
         cell.ratingLabel.text = "\(movieArray[indexPath.row].voteAverage)"

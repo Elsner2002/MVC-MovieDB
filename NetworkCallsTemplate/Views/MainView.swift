@@ -10,6 +10,7 @@ import UIKit
 //MARK: - ViewController
 class ViewController: UIViewController {
     //MARK: TableView Sections
+    weak var coordinator: MainCoordinator?
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -28,6 +29,7 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.shared.segueID,
            let movie = sender as? Movie {
+//            coordinator?.movieDetail(segue, movie: movie)
             let destination = segue.destination as! DetailsViewController
             
             destination.detailController = DetailController(movie: movie)
@@ -39,6 +41,7 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
+//        coordinator?.performNavigation(indexPath, controller: mainController)
         self.performSegue(withIdentifier: Constants.shared.segueID, sender: mainController.chooseSection(indexPath))
     }
 }
