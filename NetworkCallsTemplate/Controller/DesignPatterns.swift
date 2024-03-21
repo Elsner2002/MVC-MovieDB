@@ -25,6 +25,8 @@ class Constants: ObservableObject {
       "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZDRiNGFiYmNmMTM5MmNhNzY5MWJmN2Q5M2Y0MTVjOSIsInN1YiI6IjY0OWM2NDQ0ZmQ0ZjgwMDBlY2IzZTZkNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1KVIGHOCX3Kc8HmFRMQR36R9sMkRVlz81ikniCVMig8"
     ]
     
+    @Published var viewController: ViewController?
+    
 }
 
 protocol Coordinator {
@@ -53,9 +55,10 @@ class MainCoordinator: Coordinator {
     }
     
     func movieDetail(_ segue: UIStoryboardSegue, movie: Movie ) {
-        let vc = DetailsViewController()
-                
-        vc.coordinator = self
+        
+//        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
+//        vc.coordinator = self
                 
         let destination = segue.destination as! DetailsViewController
         
@@ -64,10 +67,13 @@ class MainCoordinator: Coordinator {
     
     func performNavigation(_ indexPath: IndexPath, controller: MainController) {
 
-        let storyboard = UIStoryboard(name: "Main", bundle: .main)
-        let vc = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
-        vc.coordinator = self
+//        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+//        print("JORGE PASSEI")
+//        vc.coordinator = self
         
-        vc.performSegue(withIdentifier: Constants.shared.segueID, sender: controller.chooseSection(indexPath))
+        Constants.shared.viewController!.performSegue(withIdentifier: Constants.shared.segueID, sender: controller.chooseSection(indexPath))
+        
+//        print("JORGE PERFORMEI")
     }
 }

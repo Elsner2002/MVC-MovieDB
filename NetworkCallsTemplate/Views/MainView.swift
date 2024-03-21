@@ -7,18 +7,6 @@
 
 import UIKit
 
-protocol Storyboarded {
-    static func instantiate() -> Self
-}
-extension Storyboarded where Self: UIViewController {
-    static func instantiate() -> Self {
-        let fullname = NSStringFromClass(self)
-        let classname = fullname.components(separatedBy: ".")[1]
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        return storyboard.instantiateViewController(withIdentifier:  classname) as! Self
-    }
-}
-
 //MARK: - ViewController
 class ViewController: UIViewController, Storyboarded {
     //MARK: TableView Sections
@@ -34,6 +22,8 @@ class ViewController: UIViewController, Storyboarded {
         
         mainController.apiCall(tableView)
         
+        Constants.shared.viewController = self
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
     }
@@ -42,9 +32,9 @@ class ViewController: UIViewController, Storyboarded {
         if segue.identifier == Constants.shared.segueID,
            let movie = sender as? Movie {
             coordinator?.movieDetail(segue, movie: movie)
-            //let destination = segue.destination as! DetailsViewController
-            
-           // destination.detailController = DetailController(movie: movie)
+//            let destination = segue.destination as! DetailsViewController
+//            
+//            destination.detailController = DetailController(movie: movie)
         }
     }
 }
@@ -54,7 +44,8 @@ extension ViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         coordinator?.performNavigation(indexPath, controller: mainController)
-        //self.performSegue(withIdentifier: Constants.shared.segueID, sender: mainController.chooseSection(indexPath))
+//        coordinator?.performNavigation(indexPath, controller: mainController, vc: self)
+//        self.performSegue(withIdentifier: Constants.shared.segueID, sender: mainController.chooseSection(indexPath))
     }
 }
 
