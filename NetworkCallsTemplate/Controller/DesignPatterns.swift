@@ -46,8 +46,9 @@ class MainCoordinator: Coordinator {
     }
         
     func start() {
-        let vc = ViewController()
-
+        let vc = ViewController.instantiate()
+        vc.coordinator = self
+        
         navigationController.pushViewController(vc, animated: false)
     }
     
@@ -62,8 +63,9 @@ class MainCoordinator: Coordinator {
     }
     
     func performNavigation(_ indexPath: IndexPath, controller: MainController) {
-        let vc = DetailsViewController()
-                
+
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
         vc.coordinator = self
         
         vc.performSegue(withIdentifier: Constants.shared.segueID, sender: controller.chooseSection(indexPath))
