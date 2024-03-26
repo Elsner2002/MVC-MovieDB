@@ -41,6 +41,17 @@
                ReferencedContainer = "container:NetworkCallsTemplate.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "731C1D392BB395050029130E"
+               BuildableName = "NetworkCallsTemplateUITests.xctest"
+               BlueprintName = "NetworkCallsTemplateUITests"
+               ReferencedContainer = "container:NetworkCallsTemplate.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
