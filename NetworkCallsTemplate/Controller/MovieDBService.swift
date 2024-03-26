@@ -7,20 +7,25 @@
 
 import Foundation
 
+protocol Service {
+    func setupFetchRequest(url urlString: String) -> URLRequest?
+    func fetchImage(posterPath path: String, completionBlock: @escaping (Data) -> Void)
+}
+
 // MARK: - Service
-class MovieDBService {
-    static func setupFetchRequest(url urlString: String) -> URLRequest? {
+class MovieDBService: Service {
+    func setupFetchRequest(url urlString: String) -> URLRequest? {
         guard let url = URL(string: urlString) else { return nil }
         var request = URLRequest(url: url)
         
-        for (key, value) in Constants.shared.headers{
+        for (key, value) in Constants.shared.headers {
             request.setValue(value, forHTTPHeaderField: key)
         }
         
         return request
     }
     
-    static func fetchImage(posterPath path: String, completionBlock: @escaping (Data) -> Void) {
+    func fetchImage(posterPath path: String, completionBlock: @escaping (Data) -> Void) {
         guard let request = setupFetchRequest(url: "https://image.tmdb.org/t/p/w342\(path)") else { return }
         
         URLSession.shared.dataTask(with: request) { data, response, error in

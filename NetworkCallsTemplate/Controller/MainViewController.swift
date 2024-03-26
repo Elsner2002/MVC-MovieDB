@@ -13,6 +13,8 @@ class MainController {
     private var nowPlaying: [Movie] = []
     private var popular: [Movie] = []
     
+    let movieService: MovieDBService = MovieDBService()
+    
     //MARK: Call teh API to get data
     func apiCall(_ tableView: UITableView) {
         //get the popular movies in API
@@ -68,6 +70,7 @@ class MainController {
             print(error)
         }
     }
+    
     private func decodeByManualKeys(data: Data, type: Section) {
         do {
             
@@ -166,7 +169,7 @@ class MainController {
             cell.posterView.image = imageC
         }
         else{
-            MovieDBService.fetchImage(posterPath: movie.posterPath) { [weak self] data in
+            movieService.fetchImage(posterPath: movie.posterPath) { [weak self] data in
                 
                 switch sec {
                 case .nowPlaying:
