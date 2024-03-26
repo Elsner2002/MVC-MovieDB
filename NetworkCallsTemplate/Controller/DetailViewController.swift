@@ -5,6 +5,8 @@ import UIKit
 class DetailController {
     var movie: Movie
     
+    let movieService: MovieDBService = MovieDBService()
+    
     init(movie: Movie) {
         self.movie = movie
     }
@@ -13,10 +15,9 @@ class DetailController {
     func fetchImage(_ cell: DetailsMovieCell, _ tableView: UITableView, indexPath: IndexPath) {
         if let dataC = movie.imageCover, let imageC = UIImage(data: dataC) {
             cell.posterView.image = imageC
-        }
-        else{
+        } else {
             //reload ows with images that wasn't in the code
-            MovieDBService.fetchImage(posterPath: movie.posterPath) { [weak self] data in
+            movieService.fetchImage(posterPath: movie.posterPath) { [weak self] data in
                 self?.movie.imageCover = data
                 
                 DispatchQueue.main.async {
